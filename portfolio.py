@@ -1,6 +1,3 @@
-
-#https://github.com/alvarobartt/pyrtfolio/
-
 from pyrtfolio.StockPortfolio import StockPortfolio
 
 portfolio = StockPortfolio()

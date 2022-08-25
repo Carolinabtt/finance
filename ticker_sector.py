@@ -13,28 +13,19 @@ import bs4 as bs
 # %% codecell
 
 # en un indice
-stocks = pd.read_excel('Tickers.xlsx', sheet_name="NASDAQ") # Total Tickers
+stocks = pd.read_excel('Tickers.xlsx', sheet_name="TICKERS") # Total Tickers
 in_index=stocks['Grupo']=='IBEX35_y'
 in_index=stocks['Grupo']!=='IBEX35'
 stocks = stocks[in_index]
 
 # Total synmbols
-stocks = pd.read_excel('Tickers.xlsx', sheet_name="NASDAQ") # Total Tickers
+stocks = pd.read_excel('Tickers.xlsx', sheet_name="TICKERS") # Total Tickers
 stocks = stocks['Symbol']
 sector = stocks.iloc[:,[0,3,6,7]].set_index('Symbol')
 stocks = stocks.drop_duplicates()
 tickers = stocks.values.tolist()
 tickers = tickers[11:16]
 thelen = len(tickers)
-thelen
-
-
-#url = "https://www.nasdaq.com/market-activity/stocks/NIO" #se cuelga USAR HEADERS
-#r = requests.get(url).text
-#soup = bs(r,'html.parser')
-#alldata = soup.find_all('body') #tbody tablas
-#sector = soup.findAll('span', {'class': ["Fw(600)"], 'data-reactid': ['23']}) #Sector
-#industry = soup.findAll('span', {'class': ["Fw(600)"], 'data-reactid': ['27']}) #Industry
 
 ticker_sector = pd.DataFrame(columns=['Symbol','Sector','Industry'])
 for ticker in range(thelen):
@@ -51,7 +42,7 @@ for ticker in range(thelen):
         print(tickers[ticker], 'Error:', sys.exc_info()[0])
         pass
 
-ticker_sector.to_excel('tickers_sector_202011.xlsx')
+ticker_sector.to_excel('tickers_sector.xlsx')
 
 #### Sector S5P500  solo tiene Sector y Sub-Industry
 resp = requests.get('http://en.wikipedia.org/wiki/List_of_S%26P_500_companies')

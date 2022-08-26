@@ -12,14 +12,8 @@ import requests
 import bs4 as bs
 # %% codecell
 
-# en un indice
-stocks = pd.read_excel('Tickers.xlsx', sheet_name="TICKERS") # Total Tickers
-in_index=stocks['Grupo']=='IBEX35_y'
-in_index=stocks['Grupo']!=='IBEX35'
-stocks = stocks[in_index]
-
-# Total synmbols
-stocks = pd.read_excel('Tickers.xlsx', sheet_name="TICKERS") # Total Tickers
+# Total synmbols no duplicates
+stocks = pd.read_excel('Tickers.xlsx', sheet_name="Tickers") # Total Tickers
 stocks = stocks['Symbol']
 sector = stocks.iloc[:,[0,3,6,7]].set_index('Symbol')
 stocks = stocks.drop_duplicates()
@@ -27,6 +21,7 @@ tickers = stocks.values.tolist()
 tickers = tickers[11:16]
 thelen = len(tickers)
 
+### Scraping yahoo website to obtain companies sectors and industry
 ticker_sector = pd.DataFrame(columns=['Symbol','Sector','Industry'])
 for ticker in range(thelen):
     try:
@@ -44,7 +39,7 @@ for ticker in range(thelen):
 
 ticker_sector.to_excel('tickers_sector.xlsx')
 
-#### Sector S5P500  solo tiene Sector y Sub-Industry
+#### Scraping wikipedia S&P500 page to obtain companies sector and industry
 resp = requests.get('http://en.wikipedia.org/wiki/List_of_S%26P_500_companies')
 soup = bs.BeautifulSoup(resp.text, 'lxml')
 table = soup.find('table', {'class': 'wikitable sortable'})
@@ -70,3 +65,4 @@ sectordf = pd.DataFrame(industries,columns=['industry'])
 
 tickerandsector = pd.concat([tickerdf, sectordf], axis=1, join_axes=[tickerdf.index])
 print(tickerandsector)
+tickerandsector.to_excel('tickers_sector_wiki.xlsx')

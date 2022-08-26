@@ -1,5 +1,5 @@
 # Finance
- This repository contains scripts for stocks and founds analysis
+ This repository contains scripts for stocks and funds analysis
 
 
 ## ticker_sector.py

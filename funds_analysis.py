@@ -47,7 +47,7 @@ columnas = ['Fondo','Close']
 media_opsd_semanal = opsd_dia[columnas].resample('W').mean()
 media_opsd_semanal.head(3)
 
-# Filtro de un fondo
+# Filtro informacion de un fondo
 in_fondo1=fondos_dia['Fondo']=='Morgan Stanley Investment Funds - Us Growth Fund A'
 fondo1=fondos_dia[in_fondo1]
 fondo1.drop_duplicates(subset='Close', keep='last')
